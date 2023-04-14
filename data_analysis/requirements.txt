@@ -1,0 +1,11 @@
+jupyterlab
+ipython
+pandas
+matplotlib
+seaborn
+requests
+python-dotenv
+google-cloud-bigquery
+db-dtypes
+scikit-learn
+pytorch-tabnet
