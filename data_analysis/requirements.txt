@@ -9,3 +9,5 @@ google-cloud-bigquery
 db-dtypes
 scikit-learn
 pytorch-tabnet
+pymongo
+python-dotenv
