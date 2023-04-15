@@ -1,6 +1,6 @@
-# Lens hackathon
+# ETHGlobal Tokyo 2023 
 
-## Are you a human?
+## Are you a human on Lens?
 
 ### Mission
 - Analyse your data vs other lens users if not on lens analyse if you are worth of getting a profile?
@@ -21,8 +21,9 @@
 Generate dataset
 Generate labels
 Train model
-Deploy it
-Write prediction request/response
+make predictions
+explain predictions
+serve predictions
 
 
 ### Day 2
