@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 import { MainPage } from "../components/mainPage";
 import { LensLogin } from "../components/lensLogin";
-import { RenderProfile } from "../components/lensProfile";
+import { RenderProfile, RenderQueryProfile } from "../components/lensProfile";
 import { BotButton, CheckBot } from "../components/botButton";
 import { AirStackTracker } from "../components/airstackTracker";
 
@@ -70,48 +70,6 @@ export default function Home() {
     }
   }, [profileId]);
 
-  /*   return (
-    <div className="flex justify-center w-64 mx-auto mt-2 mb-10 align-middle">
-      <MainPage />
-      {isConnected && (
-        <div
-          className={`flex flex-col justify-center w-screen mx-auto mt-10 ${
-            !profileId ? "invisible" : ""
-          }`}
-        >
-          <LensLogin
-            address={address}
-            handleAccessTokenChange={accessTokenHandler}
-            handleProfileChange={profileHandler}
-            handleHandleChange={profileHandleHandler}
-            handleProfilePic={profilePicHandler}
-            handleLensLoggedIn={lensLoginHandler}
-            handleLoadingProfile={lensLoadingProfile}
-            handleDefaultProfile={lensProfileHandler}
-          />
-        </div>
-      )}
-      {lensLoggedIn && (
-        <div
-          className={`flex flex-col justify-center w-screen mx-auto mt-10 mb-10`}
-        >
-          <RenderProfile
-            defaultLensProfile={defaultLensProfile}
-            isLoggedIn={lensLoggedIn}
-          />
-        </div>
-      )}
-      {<CheckBot />}
-      <div className="flex flex-col w-screen pl-10 ml-10">
-        {<BotButton text={"Bot or Not? 👀"} />}
-        {<BotButton text={"Compare your assets"} />}
-        {<BotButton text={"Attest your result on-chain "} />}
-        {<BotButton text={"Help us make the data better"} />}
-      </div>
-    </div>
-  );
-}
- */
   return (
     <div className="flex flex-col w-screen h-screen">
       <div className="flex-grow bg-gray-800">
@@ -145,6 +103,10 @@ export default function Home() {
         </div>
       </div>
       <div className="flex-grow bg-gray-800">
+        {queryLensProfile && (
+          <RenderQueryProfile queryProfile={queryLensProfile} />
+        )}
+
         <CheckBot
           handleQueryProfile={lensQueryProfileHandler}
           address={address}

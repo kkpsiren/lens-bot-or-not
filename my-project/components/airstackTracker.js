@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { nanoid } from "nanoid";
 
 import Link from "next/link";
 
@@ -6,11 +7,14 @@ export function AirStackTracker({ address1, address2 }) {
   const [data, setData] = useState();
   const [isGetting, setIsGetting] = useState();
   const [error, setError] = useState();
+  const [isHidden, setIsHidden] = useState(true);
+
+  const toggleTable = () => {
+    setIsHidden(!isHidden);
+  };
 
   const handleSubmitAirstack = async (e) => {
-    console.log("triggered");
     setIsGetting(true);
-    e.preventDefault();
 
     try {
       const response = await fetch("/api/airstack", {
@@ -28,7 +32,6 @@ export function AirStackTracker({ address1, address2 }) {
       setData(jsonData);
       setError(null);
       setIsGetting(false);
-      console.log(jsonData);
     } catch (error) {
       console.error(error);
       setError("Something went wrong.");
@@ -37,16 +40,21 @@ export function AirStackTracker({ address1, address2 }) {
     }
   };
 
+  useEffect(() => {
+    if (address1 && address2) {
+      handleSubmitAirstack();
+    }
+  }, [address1, address2]);
   return (
     <div>
       <button
-        onClick={handleSubmitAirstack}
-        disabled={!address1 || !address2 || isGetting}
         className="flex flex-col items-center justify-center w-64 h-10 p-2 mx-auto mt-2 mr-2 font-semibold text-center text-black align-middle bg-red-100 rounded-full focus:border-yellow-50"
+        onClick={toggleTable}
       >
-        Get Airstack Data!
+        Toggle Assets
       </button>
-      {data && (
+
+      {!isHidden && data ? (
         <table className="w-full border-collapse">
           <thead>
             <tr>
@@ -72,7 +80,7 @@ export function AirStackTracker({ address1, address2 }) {
           </thead>
           <tbody>
             {data.map((item) => (
-              <tr key={item.id}>
+              <tr key={nanoid()}>
                 <td className="px-4 py-2 border-b">{item.token.name}</td>
                 <td className="px-4 py-2 border-b">
                   <Link
@@ -93,6 +101,8 @@ export function AirStackTracker({ address1, address2 }) {
             ))}
           </tbody>
         </table>
+      ) : (
+        ""
       )}
     </div>
   );

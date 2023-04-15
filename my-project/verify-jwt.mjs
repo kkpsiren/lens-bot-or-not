@@ -27,6 +27,21 @@ export async function getProfile(profileId) {
       query: `query Profile($singleProfileQueryRequest: SingleProfileQueryRequest!) {
         profile(request: $singleProfileQueryRequest) {
           ownedBy
+          picture {
+            ... on NftImage {
+              contractAddress
+              tokenId
+              uri
+              verified
+            }
+            ... on MediaSet {
+              original {
+                url
+                mimeType
+              }
+            }
+            __typename
+          }
         }
       }`,
       variables: { singleProfileQueryRequest },
@@ -39,7 +54,11 @@ export async function getProfile(profileId) {
       data: graphqlQuery,
     });
     const owner = response.data.data.profile.ownedBy;
-    return { status: "SUCCESS", owner: owner.toLowerCase() };
+    return {
+      status: "SUCCESS",
+      owner: owner.toLowerCase(),
+      picture: response.data.data.profile.picture,
+    };
   } catch (err) {
     console.log(err);
     return { status: "FAILED", msg: "Something went horribly wrong" };

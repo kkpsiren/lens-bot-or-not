@@ -43,7 +43,6 @@ export function RenderProfile({ defaultLensProfile, isLoggedIn }) {
 
 export function RenderQueryProfile({ queryProfile }) {
   let profile = queryProfile;
-  console.log({ profile });
   let picture = profile?.picture;
   if (picture && picture.original && picture.original.url) {
     if (picture.original.url.startsWith("ipfs://")) {
@@ -56,22 +55,10 @@ export function RenderQueryProfile({ queryProfile }) {
       profile.avatarUrl = picture.original.url;
     }
   }
-  let coverPicture = profile?.coverPicture;
-  if (coverPicture && coverPicture.original && coverPicture.original.url) {
-    if (coverPicture.original.url.startsWith("ipfs://")) {
-      let result = coverPicture.original.url.substring(
-        7,
-        coverPicture.original.url.length
-      );
-      profile.avatarCover = `https://gateway.ipfscdn.io/ipfs/${result}`;
-    } else {
-      profile.avatarCover = coverPicture.original.url;
-    }
-  }
   return (
     <div>
-      <div className="w-fit md:w-1/3">
-        <div className="absolute top-0 left-0 flex items-center justify-center w-56 h-56 mt-10 ml-10 bg-black rounded-full">
+      <div className="relative w-fit md:w-1/3">
+        <div className="absolute top-0 left-0 z-10 flex items-center justify-center w-56 h-56 mt-10 ml-10 bg-black rounded-full">
           {profile ? (
             <img className="rounded-full w-46 h-46" src={profile.avatarUrl} />
           ) : (

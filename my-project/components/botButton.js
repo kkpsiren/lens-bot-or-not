@@ -25,7 +25,7 @@ export function CheckBot({
       getProfile(ethers.utils.hexlify(data.id))
         .then((response) => {
           handleQueryAddress(response.owner);
-          console.log("success");
+          handleQueryProfile({ picture: response.picture });
         })
         .catch((err) => {
           console.log(err);
