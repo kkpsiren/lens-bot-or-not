@@ -1,6 +1,20 @@
 # ETHGlobal Tokyo 2023 
 
 ## Are you a human on Lens?
+![image.png](image.png)
+
+
+## Short story
+Bots are taking over the world and are dangerooooous. It is up to us the users the start contributing to fight against them.
+Let's go. Be the superhero. Earn blockchain cred by executing your insights on-chain. Labeling bots and humans not only helps to poor false positive souls but also helps the devs build better models to find them.
+
+
+
+
+
+
+## Execution:
+
 
 ### Mission
 - Analyse your data vs other lens users if not on lens analyse if you are worth of getting a profile?
