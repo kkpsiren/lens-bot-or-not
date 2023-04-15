@@ -5,10 +5,12 @@ import { MainPage } from "../components/mainPage";
 import { LensLogin } from "../components/lensLogin";
 import { RenderProfile } from "../components/lensProfile";
 import { BotButton, CheckBot } from "../components/botButton";
+import { AirStackTracker } from "../components/airstackTracker";
 
 export default function Home() {
   const [profileId, setProfileId] = useState();
   const [profileHandle, setProfileHandle] = useState();
+  const [queryAddress, SetQueryAddress] = useState();
   const [profilePic, setProfilePic] = useState();
   const [lensLoggedIn, setLensLogin] = useState(false);
   const [accessToken, setAccessToken] = useState(true);
@@ -28,6 +30,10 @@ export default function Home() {
   //
   const lensLoadingProfile = (event) => {
     setLoadingProfile(event);
+  };
+
+  const handleQueryAddress = (event) => {
+    SetQueryAddress(event);
   };
 
   const lensProfileHandler = (event) => {
@@ -144,9 +150,12 @@ export default function Home() {
           address={address}
           profileId={profileId}
           accessToken={accessToken}
+          handleQueryAddress={handleQueryAddress}
         />
       </div>
-      <div className="flex-grow bg-gray-600"></div>
+      <div className="flex-grow bg-gray-600">
+        <AirStackTracker address1={address} address2={queryAddress} />
+      </div>
       <div className="flex-grow bg-gray-800"></div>
     </div>
   );

@@ -34,21 +34,11 @@ async function doTransaction(attestor, lensProfileId, value) {
   }
 }
 
-function getData({
-  attestorAddress,
-  attestorLensProfileId,
-  targetAddress,
-  targetLensProfileId,
-  type,
-}) {
+function getData({ attestorAddress, attestorLensProfileId, data }) {
   return {
     attestor: attestorAddress,
-    lensProfileId: targetLensProfileId,
-    value: {
-      ownerOfLensProfileId: targetAddress,
-      type: type,
-      attestorLensProfileId: attestorLensProfileId,
-    },
+    lensProfileId: attestorLensProfileId,
+    value: data,
   };
 }
 
@@ -93,22 +83,14 @@ async function run(obj) {
 
 export const handler = async (event) => {
   try {
-    const { profileId } = JSON.parse(event.body);
+    const { attestor, lensProfileId, value } = JSON.parse(event.body);
 
     const accessToken = event.headers["x-access-token"].split(" ")[1];
     const verifyResponse = await verifyOwnerAndAccess(accessToken, profileId);
     const verified = verifyResponse?.isValid ? verifyResponse.isValid : false;
 
     if (verified) {
-      const obj = {
-        attestorAddress: verifyResponse.address,
-        attestorLensProfileId: profileId,
-        targetAddress: verifyResponse.address,
-        targetLensProfileId: profileId,
-        type: "Scroll User",
-      };
-
-      const response = await run(obj);
+      const response = await run({ attestor, lensProfileId, value });
       return {
         statusCode: 200,
         body: JSON.stringify(response),
@@ -129,9 +111,3 @@ export const handler = async (event) => {
     };
   }
 };
-
-(async () => {
-  const obj = getTestData();
-  const result = await run(obj);
-  console.log(result);
-})();

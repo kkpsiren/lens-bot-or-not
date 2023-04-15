@@ -1,11 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { getProfile } from "../verify-jwt.mjs";
+import { ethers } from "ethers";
 
 export function CheckBot({
   handleQueryProfile,
   address,
   profileId,
   accessToken,
+  handleQueryAddress,
 }) {
   const [id, setHandle] = useState("");
   const [gettingData, setGettingData] = useState(false);
@@ -17,6 +20,18 @@ export function CheckBot({
   const [countBots, setCountBots] = useState(0);
   const [attestList, setAttestList] = useState({});
 
+  useEffect(() => {
+    if (data?.id) {
+      getProfile(ethers.utils.hexlify(data.id))
+        .then((response) => {
+          handleQueryAddress(response.owner);
+          console.log("success");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [data?.id]);
   const handleAddHuman = () => {
     handleSubmitRandom();
     setCountHumans(countHumans + 1);
