@@ -9,11 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.12",
+    "@lens-protocol/react-web": "^1.0.1",
+    "@next/font": "^13.3.0",
+    "@web3modal/ethereum": "^2.3.0",
+    "@web3modal/react": "^2.3.0",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
+    "ethers": "^5.7.2",
     "next": "13.3.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.9",
+    "react-hot-toast": "^2.4.0",
+    "wagmi": "^0.12.10"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
