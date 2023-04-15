@@ -17,15 +17,15 @@ export default function Home() {
   const [queryLensProfile, setQueryLensProfile] = useState(true);
 
   const { address, isConnected } = useAccount();
-
-  console.log({
-    profileId,
-    profileHandle,
-    profilePic,
-    lensLoggedIn,
-    address,
-  });
-
+  //
+  //   console.log({
+  //     profileId,
+  //     profileHandle,
+  //     profilePic,
+  //     lensLoggedIn,
+  //     address,
+  //   });
+  //
   const lensLoadingProfile = (event) => {
     setLoadingProfile(event);
   };
@@ -107,8 +107,8 @@ export default function Home() {
 }
  */
   return (
-    <div class="flex flex-col w-screen h-screen">
-      <div class="flex-grow bg-gray-800">
+    <div className="flex flex-col w-screen h-screen">
+      <div className="flex-grow bg-gray-800">
         <div>
           <MainPage />
           {isConnected && (
@@ -138,11 +138,16 @@ export default function Home() {
           )}
         </div>
       </div>
-      <div class="flex-grow bg-gray-800">
-        <CheckBot handleQueryProfile={lensQueryProfileHandler} />
+      <div className="flex-grow bg-gray-800">
+        <CheckBot
+          handleQueryProfile={lensQueryProfileHandler}
+          address={address}
+          profileId={profileId}
+          accessToken={accessToken}
+        />
       </div>
-      <div class="flex-grow bg-gray-600"></div>
-      <div class="flex-grow bg-gray-800"></div>
+      <div className="flex-grow bg-gray-600"></div>
+      <div className="flex-grow bg-gray-800"></div>
     </div>
   );
 }

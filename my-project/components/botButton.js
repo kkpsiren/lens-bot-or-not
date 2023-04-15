@@ -1,9 +1,17 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 
-export function CheckBot({ handleQueryProfile }) {
+export function CheckBot({
+  handleQueryProfile,
+  address,
+  profileId,
+  accessToken,
+}) {
   const [id, setHandle] = useState("");
+  const [gettingData, setGettingData] = useState(false);
+  const [isAttesting, setIsAttesting] = useState(false);
   const [data, setData] = useState(null);
+  const [attestResponse, setAttestResponse] = useState();
   const [error, setError] = useState(null);
   const [countHumans, setCountHumans] = useState(0);
   const [countBots, setCountBots] = useState(0);
@@ -19,6 +27,38 @@ export function CheckBot({ handleQueryProfile }) {
     handleSubmitRandom();
     setCountBots(countBots + 1);
     attestList[data.id] = 0;
+  };
+
+  const handleSubmitAttestation = async (e) => {
+    console.log("triggered");
+    setIsAttesting(true);
+    e.preventDefault();
+
+    try {
+      const response = await fetch("/api/attest", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-token": `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+          attestor: address,
+          lensProfileId: profileId,
+          value: attestList,
+        }),
+      });
+
+      const jsonData = await response.json();
+      setAttestResponse(jsonData);
+      setError(null);
+      setIsAttesting(false);
+      console.log(jsonData);
+    } catch (error) {
+      console.error(error);
+      setError("Something went wrong.");
+      setData(null);
+      setIsAttesting(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -143,6 +183,26 @@ export function CheckBot({ handleQueryProfile }) {
               View Profile
             </Link>
           </div>
+          <button
+            onClick={handleSubmitAttestation}
+            disabled={!address || !profileId || !accessToken || isAttesting}
+            className="flex flex-col items-center justify-center w-64 h-10 p-2 mx-auto mt-2 mr-2 font-semibold text-center text-black align-middle bg-red-100 rounded-full focus:border-yellow-50"
+          >
+            Attest!
+          </button>
+
+          {attestResponse?.data?.url ? (
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-col mt-10 text-xl text-blue-500 place-items-center hover:text-blue-700 hover:underline"
+              href={`${attestResponse?.data?.url}`}
+            >
+              View Transaction
+            </Link>
+          ) : (
+            ""
+          )}
         </div>
       )}
     </div>

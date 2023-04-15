@@ -27,8 +27,8 @@ export function RenderProfile({ defaultLensProfile, isLoggedIn }) {
   return (
     <div>
       <div className="w-fit md:w-1/3">
-        <div class="absolute top-0 left-0 mt-10 ml-10 w-56 h-56 bg-black flex justify-center items-center rounded-full">
-          <img class="w-52 h-52 rounded-full" src={profile.avatarUrl} />
+        <div className="absolute top-0 left-0 flex items-center justify-center w-56 h-56 mt-10 ml-10 bg-black rounded-full">
+          <img className="rounded-full w-52 h-52" src={profile.avatarUrl} />
         </div>
         <div className="w-full pt-3 mx-auto mt-10 text-right md:pt-0">
           <div className="text-2xl ">Gm {profile.name}</div>
@@ -71,9 +71,9 @@ export function RenderQueryProfile({ queryProfile }) {
   return (
     <div>
       <div className="w-fit md:w-1/3">
-        <div class="absolute top-0 left-0 mt-10 ml-10 w-56 h-56 bg-black flex justify-center items-center rounded-full">
+        <div className="absolute top-0 left-0 flex items-center justify-center w-56 h-56 mt-10 ml-10 bg-black rounded-full">
           {profile ? (
-            <img class="w-46 h-46 rounded-full" src={profile.avatarUrl} />
+            <img className="rounded-full w-46 h-46" src={profile.avatarUrl} />
           ) : (
             ""
           )}
